@@ -1,0 +1,16 @@
+Abbreviation = Аббревиатура
+About = О программе
+Common = Общепринятое
+    .hover = Общепринятое имя
+Language = Язык
+LeftPanel = Левая панель
+ResetApplication = Сбросить данные приложения
+ResetGui = Сбросить настройки интерфейса
+ResetTable = Сбросить настройки таблицы
+ResizeTable = Изменить размер столбцов таблицы
+Settings = Настройки
+Synonyms = Синонимы
+Iupac = IUPAC
+    .hover = Имя в формате IUPAC
+Inchi = InChI
+Smiles = SMILES

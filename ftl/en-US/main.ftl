@@ -1,0 +1,16 @@
+Abbreviation = Abbreviation
+About = About
+Common = Common
+    .hover = Common name
+Language = Language
+LeftPanel = Left panel
+ResetApplication = Reset application
+ResetGui = Reset gui
+ResetTable = Reset table
+ResizeTable = Resize table
+Settings = Settings
+Synonyms = Synonyms
+Iupac = IUPAC
+    .hover = IUPAC name
+Inchi = InChI
+Smiles = SMILES

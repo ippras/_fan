@@ -1,0 +1,98 @@
+[package]
+name = "fan"
+version = "0.2.0"
+authors = ["Giorgi Vladimirovich Kazakov", "Roman Alexandrovich Sidorov"]
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+eframe = { version = "0.34.3", features = [
+    "accesskit",
+    "default_fonts",
+    "wgpu",
+    "persistence",
+    "wayland",
+] }
+egui = "0.34.3"
+egui-phosphor = "0.12.0"
+egui_dnd = "0.15.0"
+egui_table = "0.8.0"
+log = "0.4.30"
+polars = { version = "0.52.0", default-features = false, features = [
+    "abs",
+    "array_arithmetic",
+    "bitwise",
+    "cov",
+    "cross_join",
+    "diagonal_concat",
+    "dtype-array",
+    "dtype-decimal",
+    "dtype-i16",
+    "dtype-i8",
+    "dtype-struct",
+    "dtype-u16",
+    "dtype-u8",
+    # "fmt_no_tty",
+    "iejoin",
+    "interpolate",
+    "is_between",
+    "lazy",
+    "list_eval",
+    "meta",
+    "rank",
+    "round_series",
+    "row_hash",
+    "serde",
+    "sign",
+    "trigonometry",
+    # https://github.com/pola-rs/polars/issues/23871
+    "timezones",
+] }
+serde = { version = "1.0.228", features = ["derive", "std"] }
+thiserror = "2.0.18"
+toml = "1.1.2"
+tracing = "0.1.44"
+unic-langid = { version = "0.9.6", features = ["macros"] }
+ron = "0.12.1"
+
+egui_ext = { git = "https://github.com/kgv/egui_ext", branch = "0.6" }
+egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", features = [
+    "macros",
+] }
+widgets = { git = "https://github.com/ippras/widgets", branch = "0.6", default-features = false }
+fatty_acid_names = { git = "https://github.com/ippras/fatty_acid_names" }
+molecule = { git = "https://github.com/ippras/molecule" }
+
+# Compiling egui_ext v0.4.1 (https://github.com/kgv/egui_ext#0d22bcc5)
+# Compiling egui_l20n v0.3.0 (https://github.com/kgv/egui_l20n#d5fa762d)
+# Compiling polars_ext v0.5.0 (https://github.com/kgv/polars_ext#212fae8a)
+# Compiling lipid v0.5.1 (https://github.com/ippras/lipid#03b8932f)
+# lipid = { git = "https://github.com/ippras/lipid" }
+polars_ext = { git = "https://github.com/kgv/polars_ext", features = [
+    "temporal_conversions",
+] }
+
+# native
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+poll-promise = { version = "0.3.0", features = ["tokio"] }
+tokio = { version = "1.52.3", features = ["full"] }
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+
+# web
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = "0.1.7"
+# getrandom = { version = "0.4.2", default-features = false, features = [
+#     "wasm_js",
+# ] }
+poll-promise = { version = "0.3.0", features = ["web"] }
+tracing-wasm = "0.2.1"
+wasm-bindgen-futures = "0.4.72"
+web-sys = "0.3.99"
+
+[profile.release]
+opt-level = 2 # fast and small wasm
+lto = true    # This gives LLVM many more opportunities to inline and prune functions. Not only will it make the .wasm smaller, but it will also make it faster at runtime!
+
+# Optimize all dependencies even in debug builds:
+[profile.dev.package."*"]
+opt-level = 2
