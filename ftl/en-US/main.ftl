@@ -1,0 +1,12 @@
+Abbreviation = Abbreviation
+About = About
+Common = Common
+Language = Language
+LeftPanel = Left panel
+ResetApplication = Reset application
+ResetGui = Reset gui
+ResetTable = Reset table
+ResizeTable = Resize table
+Settings = Settings
+Synonyms = Synonyms
+Systematic = Systematic (IUPAC)

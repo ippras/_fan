@@ -1,0 +1,71 @@
+[package]
+name = "fan"
+version = "0.1.0"
+authors = ["Giorgi Vladimirovich Kazakov", "Roman Alexandrovich Sidorov"]
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+eframe = { version = "0.32.3", features = [
+    "accesskit",
+    "default_fonts",
+    "glow",
+    "persistence",
+    "wayland",
+] }
+egui = "0.32.3"
+egui-phosphor = "0.10.0"
+egui_dnd = "0.13.0"
+egui_table = "0.4.0"
+log = "0.4.28"
+polars = { version = "0.51.0", default-features = false }
+serde = { version = "1.0.225", features = ["derive", "std"] }
+thiserror = "2.0.17"
+toml = "0.9.6"
+tracing = "0.1.41"
+unic-langid = { version = "0.9.6", features = ["macros"] }
+
+# url = { version = "2.5.7", features = ["serde"] }
+# radix_trie = "0.3.0"
+# polars-utils = { version = "0.51.0", features = ["nightly"] }
+# ehttp = { version = "0.5.0", features = ["json", "native-async"] }
+# egui_plot = "0.33.0"
+# egui_extras = { version = "0.32.3", features = ["datepicker", "serde", "svg"] }
+# egui_tiles = "0.13.0"
+# egui_tiles_ext = { git = "https://github.com/kgv/egui_tiles_ext" }
+# metadata = { git = "https://github.com/ippras/metadata", branch = "map" }
+
+egui_ext = { git = "https://github.com/kgv/egui_ext", features = [
+    "markdown",
+    "tracing",
+] }
+egui_l20n = { git = "https://github.com/kgv/egui_l20n", features = ["macros"] }
+lipid = { git = "https://github.com/ippras/lipid" }
+molecule = { git = "https://github.com/ippras/molecule" }
+polars_ext = { git = "https://github.com/kgv/polars_ext", features = [
+    "temporal_conversions",
+] }
+
+# native
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+poll-promise = { version = "0.3.0", features = ["tokio"] }
+tokio = { version = "1.47.1", features = ["full"] }
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+
+# web
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = "0.1.7"
+getrandom = { version = "0.3.3", default-features = false, features = [
+    "wasm_js",
+] }
+poll-promise = { version = "0.3.0", features = ["web"] }
+tracing-wasm = "0.2.1"
+wasm-bindgen-futures = "0.4.51"
+web-sys = "0.3.78"
+
+[profile.release]
+opt-level = 2 # fast and small wasm
+
+# Optimize all dependencies even in debug builds:
+[profile.dev.package."*"]
+opt-level = 2

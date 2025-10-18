@@ -1,0 +1,12 @@
+Abbreviation = Аббревиатура
+About = О программе
+Common = Общепринятое
+Language = Язык
+LeftPanel = Левая панель
+ResetApplication = Сбросить данные приложения
+ResetGui = Сбросить настройки интерфейса
+ResetTable = Сбросить настройки таблицы
+ResizeTable = Изменить размер столбцов таблицы
+Settings = Настройки
+Synonyms = Синонимы
+Systematic = Систематическое (IUPAC)
