@@ -12,3 +12,5 @@ Settings = Настройки
 Synonyms = Синонимы
 Iupac = IUPAC
     .hover = Имя в формате IUPAC
+Inchi = InChI
+Smiles = SMILES
