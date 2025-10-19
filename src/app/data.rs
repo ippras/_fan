@@ -274,7 +274,10 @@ impl Data {
                 ui.end_row();
             }
             if let Some(mut common) = ui.try_localize(&format!("{}.common", self.current)) {
-                ui.heading(ui.localize("Common"));
+                ui.heading(ui.localize("Common")).on_hover_ui(|ui| {
+                    ui.set_max_width(ui.spacing().tooltip_width);
+                    ui.label(ui.localize("Common.hover"));
+                });
                 ui.label(&common);
                 let response = ui.button(PENCIL_LINE);
                 Popup::from_toggle_button_response(&response)
@@ -299,8 +302,43 @@ impl Data {
                     );
                 ui.end_row();
             }
-            if let Some(mut systematic) = ui.try_localize(&format!("{}.systematic", self.current)) {
-                ui.heading(ui.localize("Systematic"));
+            if let Some(mut systematic) = ui.try_localize(&format!("{}.iupac", self.current)) {
+                ui.heading(ui.localize("Iupac")).on_hover_ui(|ui| {
+                    ui.set_max_width(ui.spacing().tooltip_width);
+                    ui.label(ui.localize("Iupac.hover"));
+                });
+                ui.label(&systematic);
+                let response = ui.button(PENCIL_LINE);
+                Popup::from_toggle_button_response(&response)
+                    .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
+                    .show(
+                        move |ui| {
+                            if ui.text_edit_singleline(&mut systematic).changed() {}
+                        },
+                    );
+                ui.end_row();
+            }
+            if let Some(mut systematic) = ui.try_localize(&format!("{}.inchi", self.current)) {
+                ui.heading(ui.localize("Inchi")).on_hover_ui(|ui| {
+                    ui.set_max_width(ui.spacing().tooltip_width);
+                    ui.label(ui.localize("Inchi.hover"));
+                });
+                ui.label(&systematic);
+                let response = ui.button(PENCIL_LINE);
+                Popup::from_toggle_button_response(&response)
+                    .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
+                    .show(
+                        move |ui| {
+                            if ui.text_edit_singleline(&mut systematic).changed() {}
+                        },
+                    );
+                ui.end_row();
+            }
+            if let Some(mut systematic) = ui.try_localize(&format!("{}.smiles", self.current)) {
+                ui.heading(ui.localize("Smiles")).on_hover_ui(|ui| {
+                    ui.set_max_width(ui.spacing().tooltip_width);
+                    ui.label(ui.localize("Smiles.hover"));
+                });
                 ui.label(&systematic);
                 let response = ui.button(PENCIL_LINE);
                 Popup::from_toggle_button_response(&response)

@@ -49,6 +49,7 @@ mod sources {
 
     pub(super) const RU_RU: &[&str] = &[
         asset!("/ftl/ru-RU/main.ftl"),
+        asset!("/ftl/ru-RU/aocs.org.ftl"),
         asset!("/ftl/en-US/aocs.org.ftl"),
         // asset!("/ftl/en-US/aocs.org.ext.ftl"),
     ];

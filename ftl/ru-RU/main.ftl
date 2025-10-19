@@ -1,6 +1,7 @@
 Abbreviation = Аббревиатура
 About = О программе
 Common = Общепринятое
+    .hover = Общепринятое имя
 Language = Язык
 LeftPanel = Левая панель
 ResetApplication = Сбросить данные приложения
@@ -9,4 +10,5 @@ ResetTable = Сбросить настройки таблицы
 ResizeTable = Изменить размер столбцов таблицы
 Settings = Настройки
 Synonyms = Синонимы
-Systematic = Систематическое (IUPAC)
+Iupac = IUPAC
+    .hover = Имя в формате IUPAC
