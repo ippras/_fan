@@ -1,7 +1,8 @@
-use std::{io::Cursor, sync::Arc};
+use std::{collections::BTreeMap, io::Cursor, sync::Arc};
 
 use self::state::{About, Settings, State, Windows};
 use crate::{app::data::Data, localization::ContextExt as _};
+use anyhow::Result;
 use eframe::{APP_KEY, CreationContext, Storage, get_value, set_value};
 use egui::{
     Align, CentralPanel, Context, FontDefinitions, Frame, Id, Label, Layout, MenuBar, RichText,
@@ -15,9 +16,11 @@ use egui_phosphor::{
         ARROWS_CLOCKWISE, FILE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH,
     },
 };
+use metadata::{AUTHORS, MetaDataFrame, Metadata, NAME};
 use polars::prelude::*;
 use ron::ser::{PrettyConfig, to_string_pretty, to_writer};
 use serde::{Deserialize, Serialize};
+use tracing::instrument;
 
 const ICON_SIZE: f32 = 32.0;
 const ID_SOURCE: &str = "FAN";
@@ -161,36 +164,7 @@ impl App {
                         })
                         .clicked()
                     {
-                        println!("SAVE");
-                        // let mut buffer = Vec::new();
-                        let mut data = df!(
-                            "Fruit" => ["Apple", "Apple", "Pear"],
-                            "Color" => ["Red", "Yellow", "Green"]
-                        )
-                        .unwrap();
-                        let serialized = to_string_pretty(&data, PrettyConfig::default()).unwrap();
-                        println!("serialized: {serialized:?}");
-                        let deserialized = ron::de::from_str::<DataFrame>(&serialized).unwrap();
-                        println!("deserialized: {deserialized}");
-                        // let mut buffer =
-                        //     ron::ser::to_string_pretty(&data, PrettyConfig::default()).unwrap();
-                        // println!("buffer: {buffer}");
-                        // let data_frame = ron::de::from_str::<DataFrame>(&buffer).unwrap();
-                        // println!("data_frame: {data_frame}");
-                        // let mut writer = IpcWriter::new(Cursor::new(&mut buffer));
-                        // let meta = [
-                        //     ("first_name".into(), "John".into()),
-                        //     ("last_name".into(), "Doe".into()),
-                        // ]
-                        // .into_iter()
-                        // .collect();
-                        // writer.set_custom_schema_metadata(Arc::new(meta));
-                        // let mut data = df!(
-                        //     "Fruit" => ["Apple", "Apple", "Pear"],
-                        //     "Color" => ["Red", "Yellow", "Green"]
-                        // )
-                        // .unwrap();
-                        // writer.finish(&mut data).unwrap();
+                        let _ = self.save(ctx, state);
                     }
                     ui.separator();
                     // Edit
@@ -229,6 +203,24 @@ impl App {
                 });
             });
         });
+    }
+
+    #[instrument(skip_all, err)]
+    fn save(&mut self, ctx: &Context, state: &mut State) -> Result<()> {
+        println!("SAVE");
+        let data = df!(
+            "Fruit" => ["Apple", "Apple", "Pear"],
+            "Color" => ["Red", "Yellow", "Green"]
+        )?;
+        let mut meta = Metadata(BTreeMap::new());
+        meta.insert(NAME.to_string(), "The NAME".to_string());
+        meta.insert(AUTHORS.to_string(), "value".to_string());
+        let frame = MetaDataFrame::new(meta, data);
+        let serialized = ron::ser::to_string_pretty(&frame, PrettyConfig::default())?;
+        println!("serialized: {serialized:#}");
+        // let deserialized = ron::de::from_str::<DataFrame>(&serialized)?;
+        // println!("deserialized: {deserialized}");
+        Ok(())
     }
 }
 
