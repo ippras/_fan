@@ -15,7 +15,7 @@ eframe = { version = "0.32.3", features = [
 ] }
 egui = "0.32.3"
 egui-phosphor = "0.10.0"
-egui_dnd = "0.13.0"
+egui_dnd = "0.14.0"
 egui_table = "0.4.0"
 log = "0.4.28"
 polars = { version = "0.51.0", default-features = false }
