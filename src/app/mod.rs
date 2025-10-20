@@ -1,3 +1,5 @@
+use std::{io::Cursor, sync::Arc};
+
 use self::state::{About, Settings, State, Windows};
 use crate::{app::data::Data, localization::ContextExt as _};
 use eframe::{APP_KEY, CreationContext, Storage, get_value, set_value};
@@ -9,8 +11,11 @@ use egui_ext::LightDarkButton;
 use egui_l20n::{UiExt as _, ui::locale_button::LocaleButton};
 use egui_phosphor::{
     Variant, add_to_fonts,
-    regular::{ARROWS_CLOCKWISE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH},
+    regular::{
+        ARROWS_CLOCKWISE, FILE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH,
+    },
 };
+use polars::{df, io::SerWriter as _, prelude::IpcWriter};
 use serde::{Deserialize, Serialize};
 
 const ICON_SIZE: f32 = 32.0;
@@ -144,6 +149,34 @@ impl App {
                         .clicked()
                     {
                         state.windows.open_settings ^= true;
+                    }
+                    ui.separator();
+                    // Save
+                    if ui
+                        .button(RichText::new(FILE).size(ICON_SIZE))
+                        .on_hover_ui(|ui| {
+                            ui.set_max_width(ui.spacing().tooltip_width);
+                            ui.label(ui.localize("Save"));
+                        })
+                        .clicked()
+                    {
+                        println!("SAVE");
+                        let buffer = Vec::new();
+                        let mut writer = IpcWriter::new(Cursor::new(buffer));
+                        let meta = [
+                            ("first_name".into(), "John".into()),
+                            ("last_name".into(), "Doe".into()),
+                        ]
+                        .into_iter()
+                        .collect();
+                        writer.set_custom_schema_metadata(Arc::new(meta));
+                        let mut data = df!(
+                            "Fruit" => ["Apple", "Apple", "Pear"],
+                            "Color" => ["Red", "Yellow", "Green"]
+                        )
+                        .unwrap();
+                        writer.finish(&mut data).unwrap();
+                        println!("buffer: {buffer:?}");
                     }
                     ui.separator();
                     // Edit
