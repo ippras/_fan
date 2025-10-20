@@ -161,8 +161,8 @@ impl App {
                         .clicked()
                     {
                         println!("SAVE");
-                        let buffer = Vec::new();
-                        let mut writer = IpcWriter::new(Cursor::new(buffer));
+                        let mut buffer = Vec::new();
+                        let mut writer = IpcWriter::new(Cursor::new(&mut buffer));
                         let meta = [
                             ("first_name".into(), "John".into()),
                             ("last_name".into(), "Doe".into()),
