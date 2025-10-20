@@ -8,7 +8,10 @@ use egui::{
     Align, CentralPanel, Context, FontDefinitions, Frame, Id, Label, Layout, MenuBar, RichText,
     ScrollArea, SidePanel, Sides, TopBottomPanel, Ui, Widget, Window, warn_if_debug_build,
 };
-use egui_ext::LightDarkButton;
+use egui_ext::{
+    LightDarkButton,
+    download::{NONE, download},
+};
 use egui_l20n::{UiExt as _, ui::locale_button::LocaleButton};
 use egui_phosphor::{
     Variant, add_to_fonts,
@@ -207,6 +210,8 @@ impl App {
     #[instrument(skip_all, err)]
     fn save(&mut self, ctx: &Context, state: &mut State) -> Result<()> {
         println!("SAVE");
+
+        let id = &self.data.current;
         let data = df!(
             "Fruit" => ["Apple", "Apple", "Pear"],
             "Color" => ["Red", "Yellow", "Green"]
@@ -278,4 +283,5 @@ impl eframe::App for App {
 }
 
 mod data;
+mod export;
 mod state;
