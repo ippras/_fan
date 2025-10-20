@@ -15,7 +15,7 @@ use egui_phosphor::{
         ARROWS_CLOCKWISE, FILE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH,
     },
 };
-use polars::{df, io::SerWriter as _, prelude::IpcWriter};
+use polars::prelude::*;
 use serde::{Deserialize, Serialize};
 
 const ICON_SIZE: f32 = 32.0;
@@ -161,22 +161,36 @@ impl App {
                         .clicked()
                     {
                         println!("SAVE");
-                        let mut buffer = Vec::new();
-                        let mut writer = IpcWriter::new(Cursor::new(&mut buffer));
-                        let meta = [
-                            ("first_name".into(), "John".into()),
-                            ("last_name".into(), "Doe".into()),
-                        ]
-                        .into_iter()
-                        .collect();
-                        writer.set_custom_schema_metadata(Arc::new(meta));
+                        // let mut buffer = Vec::new();
                         let mut data = df!(
                             "Fruit" => ["Apple", "Apple", "Pear"],
                             "Color" => ["Red", "Yellow", "Green"]
                         )
                         .unwrap();
-                        writer.finish(&mut data).unwrap();
-                        println!("buffer: {buffer:?}");
+                        let serialized = data.serialize_to_bytes().unwrap();
+                        println!("serialized: {serialized:?}");
+                        let deserialized =
+                            DataFrame::deserialize_from_reader(&mut &*serialized).unwrap();
+                        println!("deserialized: {deserialized}");
+                        // let mut buffer =
+                        //     ron::ser::to_string_pretty(&data, PrettyConfig::default()).unwrap();
+                        // println!("buffer: {buffer}");
+                        // let data_frame = ron::de::from_str::<DataFrame>(&buffer).unwrap();
+                        // println!("data_frame: {data_frame}");
+                        // let mut writer = IpcWriter::new(Cursor::new(&mut buffer));
+                        // let meta = [
+                        //     ("first_name".into(), "John".into()),
+                        //     ("last_name".into(), "Doe".into()),
+                        // ]
+                        // .into_iter()
+                        // .collect();
+                        // writer.set_custom_schema_metadata(Arc::new(meta));
+                        // let mut data = df!(
+                        //     "Fruit" => ["Apple", "Apple", "Pear"],
+                        //     "Color" => ["Red", "Yellow", "Green"]
+                        // )
+                        // .unwrap();
+                        // writer.finish(&mut data).unwrap();
                     }
                     ui.separator();
                     // Edit

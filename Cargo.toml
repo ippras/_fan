@@ -18,10 +18,7 @@ egui-phosphor = "0.10.0"
 egui_dnd = "0.13.0"
 egui_table = "0.4.0"
 log = "0.4.28"
-polars = { version = "0.51.0", default-features = false, features = [
-    "ipc",
-    "ipc_streaming",
-] }
+polars = { version = "0.51.0", default-features = false }
 serde = { version = "1.0.225", features = ["derive", "std"] }
 thiserror = "2.0.17"
 toml = "0.9.6"
