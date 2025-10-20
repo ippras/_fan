@@ -1,17 +1,17 @@
 use std::{collections::BTreeMap, io::Cursor, sync::Arc};
 
 use self::state::{About, Settings, State, Windows};
-use crate::{app::data::Data, localization::ContextExt as _};
+use crate::{
+    app::{data::Data, export::MetaDataFrame},
+    localization::ContextExt as _,
+};
 use anyhow::Result;
 use eframe::{APP_KEY, CreationContext, Storage, get_value, set_value};
 use egui::{
     Align, CentralPanel, Context, FontDefinitions, Frame, Id, Label, Layout, MenuBar, RichText,
     ScrollArea, SidePanel, Sides, TopBottomPanel, Ui, Widget, Window, warn_if_debug_build,
 };
-use egui_ext::{
-    LightDarkButton,
-    download::{NONE, download},
-};
+use egui_ext::LightDarkButton;
 use egui_l20n::{UiExt as _, ui::locale_button::LocaleButton};
 use egui_phosphor::{
     Variant, add_to_fonts,
@@ -219,9 +219,10 @@ impl App {
         let mut meta = BTreeMap::new();
         meta.insert("Name".to_string(), "The NAME".to_string());
         meta.insert("Authors".to_string(), "value".to_string());
-        let frame = (meta, data);
-        let serialized = ron::ser::to_string_pretty(&frame, PrettyConfig::default())?;
-        println!("serialized: {serialized:#}");
+        let frame = MetaDataFrame { meta, data };
+        export::ron::save(&frame, "name.ron")?;
+        // let serialized = ron::ser::to_string_pretty(&frame, PrettyConfig::default())?;
+        // println!("serialized: {serialized:#}");
         // let deserialized = ron::de::from_str::<DataFrame>(&serialized)?;
         // println!("deserialized: {deserialized}");
         Ok(())
