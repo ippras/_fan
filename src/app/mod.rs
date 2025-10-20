@@ -16,7 +16,6 @@ use egui_phosphor::{
         ARROWS_CLOCKWISE, FILE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH,
     },
 };
-use metadata::{AUTHORS, MetaDataFrame, Metadata, NAME};
 use polars::prelude::*;
 use ron::ser::{PrettyConfig, to_string_pretty, to_writer};
 use serde::{Deserialize, Serialize};
@@ -212,10 +211,10 @@ impl App {
             "Fruit" => ["Apple", "Apple", "Pear"],
             "Color" => ["Red", "Yellow", "Green"]
         )?;
-        let mut meta = Metadata(BTreeMap::new());
-        meta.insert(NAME.to_string(), "The NAME".to_string());
-        meta.insert(AUTHORS.to_string(), "value".to_string());
-        let frame = MetaDataFrame::new(meta, data);
+        let mut meta = BTreeMap::new();
+        meta.insert("Name".to_string(), "The NAME".to_string());
+        meta.insert("Authors".to_string(), "value".to_string());
+        let frame = (meta, data);
         let serialized = ron::ser::to_string_pretty(&frame, PrettyConfig::default())?;
         println!("serialized: {serialized:#}");
         // let deserialized = ron::de::from_str::<DataFrame>(&serialized)?;
