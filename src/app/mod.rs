@@ -16,6 +16,7 @@ use egui_phosphor::{
     },
 };
 use polars::prelude::*;
+use ron::ser::{PrettyConfig, to_string_pretty, to_writer};
 use serde::{Deserialize, Serialize};
 
 const ICON_SIZE: f32 = 32.0;
@@ -167,10 +168,9 @@ impl App {
                             "Color" => ["Red", "Yellow", "Green"]
                         )
                         .unwrap();
-                        let serialized = data.serialize_to_bytes().unwrap();
+                        let serialized = to_string_pretty(&data, PrettyConfig::default()).unwrap();
                         println!("serialized: {serialized:?}");
-                        let deserialized =
-                            DataFrame::deserialize_from_reader(&mut &*serialized).unwrap();
+                        let deserialized = ron::de::from_str::<DataFrame>(&serialized).unwrap();
                         println!("deserialized: {deserialized}");
                         // let mut buffer =
                         //     ron::ser::to_string_pretty(&data, PrettyConfig::default()).unwrap();
