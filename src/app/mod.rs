@@ -16,7 +16,8 @@ use egui_l20n::{UiExt as _, ui::locale_button::LocaleButton};
 use egui_phosphor::{
     Variant, add_to_fonts,
     regular::{
-        ARROWS_CLOCKWISE, FILE, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE, SLIDERS_HORIZONTAL, TRASH,
+        ARROWS_CLOCKWISE, FILE, FLOPPY_DISK, GEAR, INFO, PENCIL, SIDEBAR_SIMPLE,
+        SLIDERS_HORIZONTAL, TRASH,
     },
 };
 use polars::prelude::*;
@@ -159,7 +160,7 @@ impl App {
                     ui.separator();
                     // Save
                     if ui
-                        .button(RichText::new(FILE).size(ICON_SIZE))
+                        .button(RichText::new(FLOPPY_DISK).size(ICON_SIZE))
                         .on_hover_ui(|ui| {
                             ui.set_max_width(ui.spacing().tooltip_width);
                             ui.label(ui.localize("Save"));
