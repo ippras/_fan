@@ -1259,13 +1259,14 @@ dependencies = [
 [[package]]
 name = "egui_l20n"
 version = "0.3.0"
-source = "git+https://github.com/kgv/egui_l20n#d5fa762d93d244b5f5dcb6392ff1c634f6653d4a"
+source = "git+https://github.com/kgv/egui_l20n#c2a85e25ea336222ce487e708a6e8261b46e6e62"
 dependencies = [
  "eframe",
  "egui",
  "egui-phosphor",
  "fluent",
  "fluent_content",
+ "indexmap",
  "tracing",
  "unic-langid",
 ]
