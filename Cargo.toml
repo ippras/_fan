@@ -61,7 +61,7 @@ getrandom = { version = "0.3.3", default-features = false, features = [
 ] }
 poll-promise = { version = "0.3.0", features = ["web"] }
 tracing-wasm = "0.2.1"
-wasm-bindgen-futures = "0.4.51"
+wasm-bindgen-futures = "0.4.56"
 web-sys = "0.3.78"
 
 [profile.release]
