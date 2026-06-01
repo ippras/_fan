@@ -32,7 +32,6 @@ polars = { version = "0.52.0", default-features = false, features = [
     "dtype-struct",
     "dtype-u16",
     "dtype-u8",
-    # "fmt_no_tty",
     "iejoin",
     "interpolate",
     "is_between",
@@ -47,6 +46,7 @@ polars = { version = "0.52.0", default-features = false, features = [
     "trigonometry",
     # https://github.com/pola-rs/polars/issues/23871
     "timezones",
+    # "fmt_no_tty",
 ] }
 serde = { version = "1.0.228", features = ["derive", "std"] }
 thiserror = "2.0.18"
@@ -63,11 +63,6 @@ widgets = { git = "https://github.com/ippras/widgets", branch = "0.6", default-f
 fatty_acid_names = { git = "https://github.com/ippras/fatty_acid_names" }
 molecule = { git = "https://github.com/ippras/molecule" }
 
-# Compiling egui_ext v0.4.1 (https://github.com/kgv/egui_ext#0d22bcc5)
-# Compiling egui_l20n v0.3.0 (https://github.com/kgv/egui_l20n#d5fa762d)
-# Compiling polars_ext v0.5.0 (https://github.com/kgv/polars_ext#212fae8a)
-# Compiling lipid v0.5.1 (https://github.com/ippras/lipid#03b8932f)
-# lipid = { git = "https://github.com/ippras/lipid" }
 polars_ext = { git = "https://github.com/kgv/polars_ext", features = [
     "temporal_conversions",
 ] }
